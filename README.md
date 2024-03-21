@@ -9,8 +9,8 @@
 - [Команда проекта](#команда-проекта)
 
 ## Технологии
-- [Python]([https://www.gatsbyjs.com/](https://www.python.org/))
-- [Telegram]([https://www.typescriptlang.org/](https://web.telegram.org/))
+- [Python](https://www.python.org/)
+- [Telegram](https://web.telegram.org/)
 - [Aiogram](https://aiogram.dev/)
 
 ## Использование
