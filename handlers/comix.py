@@ -1,26 +1,20 @@
 import os
-from dotenv import load_dotenv
-from handlers import comix_utils
-from .comix_utils import Image
-from aiogram import Router, F, types, Bot
+from aiogram import types, F
 from aiogram.filters import Command
 from aiogram.types import Message
+from aiogram.types.input_file import InputFile
+from handlers.comix_utils import router, get_random_num, download_comix, get_author_comment
+from dotenv import load_dotenv
 
 
-load_dotenv()
-
-router = Router()
-
-
-@router.message(Command("comix"))
-async def send_comix(message: types.Message):
-    bot = Bot(os.getenv("BOT_TOKEN"))
-    channel_id = str(os.getenv("CHAT_ID"))
-    image = Image()
-    image_url = image.download_comix()
-    author_text = image.get_author_comment()
-
+@router.message(F.text == "/comix")
+async def send_comix(message: Message):
+    load_dotenv()
+    chat_id = os.getenv("CHAT_ID")
+    random_num = get_random_num()
+    image_url = download_comix(random_num)
+    author_text = get_author_comment(random_num)
     if image_url:
-        await bot.send_photo(chat_id=channel_id, photo=image_url, caption=author_text)
+        await message.bot.send_photo(chat_id=chat_id, photo=image_url, caption=author_text)
     else:
         await message.answer("Ошибка при загрузке комикса.")
