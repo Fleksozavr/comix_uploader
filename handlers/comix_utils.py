@@ -14,20 +14,12 @@ def download_comix(random_num):
     url = f'https://xkcd.com/{random_num}/info.0.json'
     response = requests.get(url)
     response.raise_for_status()
-    try:
-        data = response.json()
-        image_url = data['img']
-        return image_url
-    except AttributeError as err:
-        print('Ошибка при извелчении атрибута:', err)
-
-
-def get_author_comment(random_num):
-    url = f'https://xkcd.com/{random_num}/info.0.json'
-    response = requests.get(url)
-    response.raise_for_status()
-    try:
+    if response.status_code == 200:
         author_text = response.json()['alt']
-        return author_text
-    except AttributeError as err:
-        print('Ошибка при извелчении атрибута:', err)
+        image_url = response.json()['img']
+        try:
+            return image_url, author_text
+        except AttributeError as err:
+            print('Ошибка при извелчении атрибута:', err)
+
+
