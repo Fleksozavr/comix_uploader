@@ -9,11 +9,9 @@ from dotenv import load_dotenv
 
 @router.message(F.text == "/comix")
 async def send_comix(message: Message):
-    load_dotenv()
-    chat_id = os.getenv("CHAT_ID")
+    chat_id = os.environ("CHAT_ID")
     random_num = get_random_num()
-    image_url = download_comix(random_num)
-    author_text = get_author_comment(random_num)
+    image_url, author_text = download_comix(random_num)
     if image_url:
         await message.bot.send_photo(chat_id=chat_id, photo=image_url, caption=author_text)
     else:
