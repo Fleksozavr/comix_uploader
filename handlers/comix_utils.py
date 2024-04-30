@@ -5,7 +5,8 @@ import random
 def get_random_num():
     response = requests.get('https://xkcd.com/info.0.json')
     response.raise_for_status()
-    max_num = response.json()['num']
+    comic_num = response.json()
+    max_num = comic_num['num']
     return random.randint(1, max_num)
 
 
@@ -18,9 +19,9 @@ def download_comix(random_num):
         print(f'Ошибка загрузки комикса с номером {random_num}')
         return None, None
     
-    data = response.json()
-    image_url = data.get('img')
-    author_text = data.get('alt')
+    comic_data = response.json()
+    image_url = comic_data.get('img')
+    author_text = comic_data.get('alt')
     
     if image_url and author_text:
         return image_url, author_text
