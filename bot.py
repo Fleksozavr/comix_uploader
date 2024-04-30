@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 async def main():
     load_dotenv()
-    bot_token = os.environ("TG_BOT_TOKEN")
+    bot_token = os.environ["TG_BOT_TOKEN"]
 
     if not bot_token or not chat_id:
         raise ValueError("Необходимо заполнить переменные окружения TG_BOT_TOKEN и CHAT_ID")
