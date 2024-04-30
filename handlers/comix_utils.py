@@ -1,6 +1,5 @@
 import requests
 import random
-from aiogram import Router, types
 
 
 def get_random_num():
@@ -14,12 +13,19 @@ def download_comix(random_num):
     url = f'https://xkcd.com/{random_num}/info.0.json'
     response = requests.get(url)
     response.raise_for_status()
-    if response.status_code == 200:
-        author_text = response.json()['alt']
-        image_url = response.json()['img']
-        try:
-            return image_url, author_text
-        except AttributeError as err:
-            print('Ошибка при извелчении атрибута:', err)
+    
+    if response.status_code != 200:
+        print(f'Ошибка загрузки комикса с номером {random_num}')
+        return None, None
+    
+    data = response.json()
+    image_url = data.get('img')
+    author_text = data.get('alt')
+    
+    if image_url and author_text:
+        return image_url, author_text
+    else:
+        print('Ошибка при извлечении атрибута')
+        return None, None
 
 
