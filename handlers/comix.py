@@ -11,7 +11,7 @@ load_dotenv()
 
 
 def get_chat_id():
-    return os.getenv("CHAT_ID")
+    return os.getenv["CHAT_ID"]
 
 
 @router.message(F.text == "/comix")
