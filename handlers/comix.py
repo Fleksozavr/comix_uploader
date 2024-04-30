@@ -7,9 +7,16 @@ from handlers.comix_utils import router, get_random_num, download_comix, get_aut
 from dotenv import load_dotenv
 
 
+load_dotenv()
+
+
+def get_chat_id():
+    return os.getenv("CHAT_ID")
+
+
 @router.message(F.text == "/comix")
 async def send_comix(message: Message):
-    chat_id = os.environ("CHAT_ID")
+    chat_id = get_chat_id()
     random_num = get_random_num()
     image_url, author_text = download_comix(random_num)
     if image_url:
