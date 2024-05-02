@@ -28,11 +28,13 @@ def download_comix(random_num):
         image_url = comic_data.get('img')
         author_text = comic_data.get('alt')
 
-        if image_url and author_text:
-            return image_url, author_text
-        else:
-            logging.error('Ошибка при извлечении атрибута')
-            return None, None
+        if not (image_url and author_text):
+            raise ValueError('Ошибка при извлечении атрибута')
+
+        return image_url, author_text
+
     except requests.RequestException as e:
         logging.error(f'Ошибка при загрузке комикса с номером {random_num}: {e}')
-        return None, None
+    except ValueError as e:
+        logging.error(str(e))
+    return None, None
